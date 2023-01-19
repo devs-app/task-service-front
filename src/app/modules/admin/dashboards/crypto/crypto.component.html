@@ -168,9 +168,10 @@
                             <td mat-cell *matCellDef="let company">
                                 <span
                                     class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase"
-                                    [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': company.status === 'REG',
-                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50': company.status === 'INA'}">
-                                    <span class="leading-relaxed whitespace-nowrap">{{company.status}}</span>
+                                    [ngClass]="{'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50': company.status === 'DEL',
+                                                'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50': company.status === 'REG'}">
+                                    <span class="leading-relaxed whitespace-nowrap" *ngIf="company.status === 'REG'">Activo</span>
+                                    <span class="leading-relaxed whitespace-nowrap" *ngIf="company.status === 'DEL'">Inactivo</span>
                                 </span>
                             </td>
                         </ng-container>
@@ -187,7 +188,7 @@
                                         <mat-icon>edit</mat-icon>
                                     </button>
                                     <button (click)="deleteCompany(company)" type="submit"
-                                        matTooltip="Eliminar registro" mat-icon-button color="warn"
+                                        matTooltip="Desactivar empresa" mat-icon-button color="warn"
                                         aria-label="Example icon button with a vertical three dot icon">
                                         <mat-icon>delete</mat-icon>
                                     </button>
