@@ -8,10 +8,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { FuseHighlightModule } from '@fuse/components/highlight';
 import { SharedModule } from 'app/shared/shared.module';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
+;
 
 export const routes: Route[] = [
     {
-        path     : '',
+        path: '',
         component: ConfirmationDialogComponent
     }
 ];
@@ -20,7 +23,7 @@ export const routes: Route[] = [
     declarations: [
         ConfirmationDialogComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
         MatButtonModule,
         MatCheckboxModule,
@@ -28,9 +31,24 @@ export const routes: Route[] = [
         MatInputModule,
         MatSelectModule,
         FuseHighlightModule,
-        SharedModule
-    ]
+        SharedModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        FuseHighlightModule,
+        SharedModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        SharedModule,
+        MatCheckboxModule,
+        MatIconModule
+    ],
+    providers: [MatDialog,
+        MatDialogRef]
 })
-export class ConfirmationDialogModule
-{
+export class ConfirmationDialogModule {
 }

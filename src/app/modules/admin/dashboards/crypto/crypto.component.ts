@@ -12,6 +12,9 @@ import { LegalRepresentativeModel, Person } from 'app/models/legal.representativ
 import { fuseAnimations } from '@fuse/animations';
 import { SearchService } from 'app/shared/search.service';
 import { MessagesEnum } from 'app/enums/messages.enum';
+import { FuseConfirmationService } from '@fuse/services/confirmation';
+import { ConfirmationDialogComponent } from '../../ui/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -34,12 +37,14 @@ export class CryptoComponent implements OnInit, OnDestroy {
     registerCompanyForm: UntypedFormGroup;
     updateCompanyBtn: boolean = false
     idCompany: number = 0
+    configForm: UntypedFormGroup;
 
     constructor(
         private _cryptoService: CryptoService,
         private _formBuilder: UntypedFormBuilder,
         public alertService: AlertService,
-        private searchService: SearchService
+        private searchService: SearchService,
+        public dialog: MatDialog
     ) {
     }
 
@@ -164,6 +169,16 @@ export class CryptoComponent implements OnInit, OnDestroy {
                 this.alertService.showAlertMessage('warning', MessagesEnum.DEFAULT_MESSAGE_ERROR)
             });
         }
+    }
+
+    activateCompany(company: CompanyModel) {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            width: '500px',
+            data: { data: company },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
     }
 
     dismiss(name: string) {
