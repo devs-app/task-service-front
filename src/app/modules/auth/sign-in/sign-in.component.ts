@@ -34,18 +34,18 @@ export class AuthSignInComponent implements OnInit {
         });
     }
 
-    signIn(): void {
-
+    async signIn() {
         if (this.signInForm.invalid) {
             return;
         }
-
         this.signInForm.disable();
-        
-        this._authService.signIn(this.signInForm.value)
+        await this._authService.signIn(this.signInForm.value)
             .subscribe(
                 (data: any) => {
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                    if (!data.changePassword) {
+                        
+                         
+                    }
                     this._router.navigateByUrl("/signed-in-redirect");
                 }, (response: HttpErrorResponse) => {
                     this.signInForm.enable();

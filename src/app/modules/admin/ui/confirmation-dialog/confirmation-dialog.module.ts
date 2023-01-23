@@ -10,6 +10,9 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FuseCardModule } from '@fuse/components/card';
+import { FuseAlertModule } from '@fuse/components/alert';
 ;
 
 export const routes: Route[] = [
@@ -33,19 +36,17 @@ export const routes: Route[] = [
         FuseHighlightModule,
         SharedModule,
         MatDialogModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
         MatSelectModule,
         FuseHighlightModule,
         SharedModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
         MatSelectModule,
         SharedModule,
         MatCheckboxModule,
-        MatIconModule
+        MatIconModule,
+        MatProgressSpinnerModule,
+        FuseCardModule,
+        FuseAlertModule,
+        SharedModule
     ],
     providers: [MatDialog,
         MatDialogRef]

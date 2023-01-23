@@ -12,7 +12,6 @@ import { LegalRepresentativeModel, Person } from 'app/models/legal.representativ
 import { fuseAnimations } from '@fuse/animations';
 import { SearchService } from 'app/shared/search.service';
 import { MessagesEnum } from 'app/enums/messages.enum';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { ConfirmationDialogComponent } from '../../ui/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 

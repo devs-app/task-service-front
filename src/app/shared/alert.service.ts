@@ -16,7 +16,17 @@ export class AlertService {
     this.dismiss('alertBox')
   }
 
-  showAlertMessage(type: FuseAlertType, message: string) {
+
+  private dismiss(name: string): void {
+    this._fuseAlertService.dismiss(name);
+  }
+
+  private show(name: string): void {
+    this._fuseAlertService.show(name);
+  }
+
+
+  showAlertMessage(type: FuseAlertType, message?: string) {
     this.alert = {
       type: type,
       message: message || 'Ocurrio un error inesperado, consulte con el administrador!'
@@ -28,7 +38,7 @@ export class AlertService {
     this.dismiss('alertBox')
   }
 
-  showSweetAlertSuccess1(message: string) {
+  showSweetAlertSuccess(message: string) {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
@@ -38,12 +48,16 @@ export class AlertService {
     })
   }
 
-  private dismiss(name: string): void {
-    this._fuseAlertService.dismiss(name);
+  showMessageConfigAlert(type: FuseAlertType, message?: string) {
+    this.alert = {
+      type: type,
+      message: message || 'Ocurrio un error inesperado, consulte con el administrador!'
+    };
+    this.show('alertBoxDialog')
   }
 
-  private show(name: string): void {
-    this._fuseAlertService.show(name);
+  hideMessageConfigAlert() {
+    this.dismiss('alertBoxDialog')
   }
 
 }

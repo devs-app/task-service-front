@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AppSettings } from 'app/enviroments';
+import { BusinessManagerModel } from 'app/models/business.manager';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,9 @@ export class CryptoService {
 
     deleteCompany(idCompany: number): Observable<any> {
         return this._httpClient.delete(AppSettings.API_PATH + '/v1/company/delete/' + idCompany)
+    }
+
+    saveBusinessManager(business: BusinessManagerModel) {
+        return this._httpClient.patch(AppSettings.API_PATH + '/v1/company/activate/' + business.companyId, business)
     }
 }
