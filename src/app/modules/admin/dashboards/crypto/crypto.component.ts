@@ -193,7 +193,6 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
     quote(company: CompanyModel) {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-            width: '500px',
             data: { data: company, typeAlert: ALERT_REASONS.COMPANY_QUOTE },
         });
         dialogRef.afterClosed().subscribe(result => {

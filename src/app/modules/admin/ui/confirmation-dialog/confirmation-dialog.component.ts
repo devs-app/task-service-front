@@ -2,6 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Roles } from 'app/enums/roles.enum';
 import { BusinessManagerModel } from 'app/models/business.manager';
 import { CompanyModel } from 'app/models/company.model';
 import { PersonModel } from 'app/models/person.model';
@@ -20,6 +22,9 @@ export class ConfirmationDialogComponent implements OnInit {
     formFieldHelpers: string[] = [''];
     businessManagerForm: UntypedFormGroup;
     quotesManagerForm: UntypedFormGroup;
+    recentTransactionsDataSource: MatTableDataSource<any> = new MatTableDataSource();
+    recentTransactionsTableColumns: string[] = ['id', 'rol', 'quote', 'actions'];
+    dataTable: any;
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
@@ -45,7 +50,18 @@ export class ConfirmationDialogComponent implements OnInit {
             quotetwo: ['', Validators.required],
             quotethree: ['', Validators.required]
         });
+        this.getQuotes()
+    }
 
+    getQuotes() {
+        this.dataTable = []
+        this.recentTransactionsDataSource.data = []
+        this._cryptoService.getAllQuotesManager(this.data.data.id).subscribe(data => {
+            this.dataTable = data;
+            this.recentTransactionsDataSource.data = data;
+        }, (response => {
+            this.alertService.showAlertMessage('error', response.error.message)
+        }))
     }
 
     closeDialog(): void {
@@ -83,17 +99,17 @@ export class ConfirmationDialogComponent implements OnInit {
         }
 
         let quotes1: Quotes = {
-            rol: 'ROLE_AREA_MANAGER',
+            rol: Roles.ROLE_AREA_MANAGER,
             quote: this.quotesManagerForm.value.quoteone
         }
 
         let quotes2: Quotes = {
-            rol: 'ROLE_TEAM_LEADER',
+            rol: Roles.ROLE_TEAM_LEADER,
             quote: this.quotesManagerForm.value.quotetwo
         }
 
         let quotes3: Quotes = {
-            rol: 'ROLE_TASK_MANAGER',
+            rol: Roles.ROLE_TASK_MANAGER,
             quote: this.quotesManagerForm.value.quotethree
         }
 
@@ -101,7 +117,7 @@ export class ConfirmationDialogComponent implements OnInit {
             companyId: company.data.id,
             quotes: [quotes1, quotes2, quotes3]
         }
-        
+
         this._cryptoService.saveQuotesManager(quotesManager).subscribe(data => {
             this.quotesManagerForm.enable();
             this.quotesManagerForm.reset()

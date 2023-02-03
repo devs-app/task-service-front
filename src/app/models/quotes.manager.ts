@@ -4,6 +4,7 @@ export interface QuotesManagerModel {
 }
 
 export interface Quotes {
+    id?: number,
     rol?: string
     quote?: number
 }

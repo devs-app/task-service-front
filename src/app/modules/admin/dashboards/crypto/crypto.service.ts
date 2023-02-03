@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AppSettings } from 'app/enviroments';
 import { BusinessManagerModel } from 'app/models/business.manager';
-import { QuotesManagerModel } from 'app/models/quotes.manager';
+import { Quotes, QuotesManagerModel } from 'app/models/quotes.manager';
 
 @Injectable({
     providedIn: 'root'
@@ -47,5 +47,13 @@ export class CryptoService {
 
     saveQuotesManager(quotes: QuotesManagerModel) {
         return this._httpClient.post(AppSettings.API_PATH + '/v1/company-quote/' + quotes.companyId, quotes)
+    }
+
+    getAllQuotesManager(companyId: number): Observable<Quotes[]> {
+        return this._httpClient.get<Quotes[]>(AppSettings.API_PATH + '/v1/company-quote/' + companyId).pipe(
+            tap((response: Quotes[]) => {
+                this._data.next(response);
+            })
+        );
     }
 }

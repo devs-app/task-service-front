@@ -21,6 +21,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 export const routes: Route[] = [
@@ -56,6 +64,21 @@ export const routes: Route[] = [
         FormsModule,
         MatFormFieldModule,
         MatSelectModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSortModule,
+        MatTableModule,
+        MatTabsModule,
+        NgApexchartsModule,
+        MatProgressBarModule,
+        MatDividerModule,
+        MatTooltipModule,
         ScrollingModule
     ]
 })
