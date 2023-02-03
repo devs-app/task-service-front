@@ -1,20 +1,17 @@
-<div class="flex flex-col flex-auto min-w-0">
-    <!-- Header -->
+<!--FORMULARIO PARA GERENTE DE LA EMPRESA ENCARGADA-->
+<div class="flex flex-col flex-auto min-w-0" *ngIf="data.typeAlert == 'COMPANY_MANAGER'">
     <div
         class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
-            <!-- Title -->
             <h5 class="text-3xl md:text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate center">
                 Gerente Empresa
             </h5>
-
         </div>
     </div>
-
-    <fuse-alert class="mt-8" [appearance]="'soft'" [showIcon]="false" [type]="this.alertService.alert.type"
-        [dismissible]="true" [dismissed]="false" [name]="'alertBoxDialog'">
+    <!-- <fuse-alert class="mt-8" [appearance]="'soft'" [showIcon]="false" [type]="this.alertService.alert.type"
+         [name]="'alertBoxDialog'">
         {{this.alertService.alert.message}}
-    </fuse-alert>
+    </fuse-alert> -->
     <form class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden"
         [formGroup]="businessManagerForm">
         <div class="flex flex-col gt-xs:flex-row">
@@ -59,14 +56,69 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="flex items-center justify-end border-t -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+        <div class="flex items-center justify-end -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
             <button (click)="closeDialog()" type="reset" mat-button [color]="'warn'">
                 Cancelar
             </button>
-            <button (click)="save(data)" class="px-6 ml-3" mat-flat-button [color]="'primary'">
+            <button (click)="saveCompanyManager(data)" class="px-6 ml-3" mat-flat-button [color]="'primary'">
                 Activar
             </button>
         </div>
     </form>
+</div>
 
+
+<div class="flex flex-col flex-auto min-w-0" *ngIf="data.typeAlert == 'COMPANY_QUOTE'">
+    <div
+        class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <h5 class="text-3xl md:text-3xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate center">
+                Cuotas
+            </h5>
+        </div>
+    </div>
+    <form [formGroup]="quotesManagerForm"
+        class="flex flex-col mt-8 p-8 pb-4 bg-card rounded-2xl shadow overflow-hidden">
+        <div class="flex flex-col gt-xs:flex-row">
+            <div class="flex flex-col">
+                <div class="flex flex-col">
+                    <div class="flex">
+                        <mat-form-field  [ngClass]="formFieldHelpers" class="flex-auto gt-xs:pl-3">
+                            <mat-label>Gerente</mat-label>
+                            <input [formControlName]="'quoteone'" placeholder="Cuota 1" matInput type="number">
+                            <mat-error>
+                                Se requiere este campo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field  [ngClass]="formFieldHelpers" class="flex-auto gt-xs:pl-3">
+                            <mat-label>Team Lider</mat-label>
+                            <input [formControlName]="'quotetwo'" placeholder="Cuota 2" matInput type="number">
+                            <mat-error>
+                                Se requiere este campo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field  [ngClass]="formFieldHelpers" class="flex-auto gt-xs:pl-3">
+                            <mat-label>Gerente Tareas</mat-label>
+                            <input [formControlName]="'quotethree'" placeholder="Cuota 3" matInput type="number">
+                            <mat-error>
+                                Se requiere este campo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end -mx-8 mt-8 px-8 py-5 bg-gray-50 dark:bg-gray-700">
+                <button (click)="closeDialog()" type="reset" mat-button [color]="'warn'">
+                    Cancelar
+                </button>
+                <button (click)="saveQuotes(data)" class="px-6 ml-3" mat-flat-button [color]="'primary'">
+                    Activar
+                </button>
+            </div>
+        </div>
+    </form>
 </div>

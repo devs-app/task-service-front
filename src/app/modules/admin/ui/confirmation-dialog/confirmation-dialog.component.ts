@@ -4,7 +4,8 @@ import { NgForm, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angul
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BusinessManagerModel } from 'app/models/business.manager';
 import { CompanyModel } from 'app/models/company.model';
-import { PersonrModel } from 'app/models/person.model';
+import { PersonModel } from 'app/models/person.model';
+import { Quotes, QuotesManagerModel } from 'app/models/quotes.manager';
 import { AlertService } from 'app/shared/alert.service';
 import { CryptoService } from '../../dashboards/crypto/crypto.service';
 
@@ -18,7 +19,7 @@ export class ConfirmationDialogComponent implements OnInit {
     configForm: UntypedFormGroup;
     formFieldHelpers: string[] = [''];
     businessManagerForm: UntypedFormGroup;
-    @ViewChild('businessManagerForm') signInNgForm: NgForm;
+    quotesManagerForm: UntypedFormGroup;
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
@@ -27,15 +28,22 @@ export class ConfirmationDialogComponent implements OnInit {
         private _cryptoService: CryptoService,
         public alertService: AlertService
     ) {
+        this.alertService.alert.message = ''
+        this.alertService.hideMessageConfigAlert()
     }
 
     ngOnInit(): void {
-        this.alertService.hideMessageConfigAlert()
         this.businessManagerForm = this._formBuilder.group({
             name: ['', [Validators.required]],
             lastName: ['', Validators.required],
             document: ['', Validators.required],
             email: ['', Validators.email],
+        });
+
+        this.quotesManagerForm = this._formBuilder.group({
+            quoteone: ['', [Validators.required]],
+            quotetwo: ['', Validators.required],
+            quotethree: ['', Validators.required]
         });
 
     }
@@ -44,12 +52,12 @@ export class ConfirmationDialogComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    save(company: any) {
+    saveCompanyManager(company: any) {
         if (this.businessManagerForm.invalid) {
             return
         }
 
-        let person: PersonrModel = {
+        let person: PersonModel = {
             name: this.businessManagerForm.value.name,
             lastName: this.businessManagerForm.value.lastName,
             document: this.businessManagerForm.value.document
@@ -65,6 +73,43 @@ export class ConfirmationDialogComponent implements OnInit {
         }, (response: HttpErrorResponse) => {
             this.alertService.showMessageConfigAlert('error', response.error.message)
             this.businessManagerForm.enable()
+        })
+    }
+
+
+    saveQuotes(company: any) {
+        if (this.quotesManagerForm.invalid) {
+            return
+        }
+
+        let quotes1: Quotes = {
+            rol: 'ROLE_AREA_MANAGER',
+            quote: this.quotesManagerForm.value.quoteone
+        }
+
+        let quotes2: Quotes = {
+            rol: 'ROLE_TEAM_LEADER',
+            quote: this.quotesManagerForm.value.quotetwo
+        }
+
+        let quotes3: Quotes = {
+            rol: 'ROLE_TASK_MANAGER',
+            quote: this.quotesManagerForm.value.quotethree
+        }
+
+        let quotesManager: QuotesManagerModel = {
+            companyId: company.data.id,
+            quotes: [quotes1, quotes2, quotes3]
+        }
+        
+        this._cryptoService.saveQuotesManager(quotesManager).subscribe(data => {
+            this.quotesManagerForm.enable();
+            this.quotesManagerForm.reset()
+            this.dialogRef.close(true)
+            this.alertService.showMessageConfigAlert('success', 'Registro creado')
+        }, (response: HttpErrorResponse) => {
+            this.alertService.showMessageConfigAlert('error', response.error.message)
+            this.quotesManagerForm.enable()
         })
     }
 

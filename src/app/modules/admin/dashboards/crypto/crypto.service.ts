@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AppSettings } from 'app/enviroments';
 import { BusinessManagerModel } from 'app/models/business.manager';
+import { QuotesManagerModel } from 'app/models/quotes.manager';
 
 @Injectable({
     providedIn: 'root'
@@ -42,5 +43,9 @@ export class CryptoService {
 
     saveBusinessManager(business: BusinessManagerModel) {
         return this._httpClient.patch(AppSettings.API_PATH + '/v1/company/activate/' + business.companyId, business)
+    }
+
+    saveQuotesManager(quotes: QuotesManagerModel) {
+        return this._httpClient.post(AppSettings.API_PATH + '/v1/company-quote/' + quotes.companyId, quotes)
     }
 }

@@ -1,8 +1,8 @@
-import { PersonrModel } from "./person.model"
+import { PersonModel } from "./person.model"
 
 export interface BusinessManagerModel {
     companyId?: number
-    person?: PersonrModel
+    person?: PersonModel
     email?: string
 }
 

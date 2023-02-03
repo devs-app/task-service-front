@@ -2,7 +2,7 @@ import { CompanyModel } from 'app/models/company.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from 'app/shared/alert.service';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
+import { debounceTime, Subject, throwError } from 'rxjs';
 import { ApexOptions } from 'ng-apexcharts';
 import { CryptoService } from 'app/modules/admin/dashboards/crypto/crypto.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,7 @@ import { SearchService } from 'app/shared/search.service';
 import { MessagesEnum } from 'app/enums/messages.enum';
 import { ConfirmationDialogComponent } from '../../ui/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ALERT_REASONS } from 'app/enums/alerts.messages.enum';
 
 
 @Component({
@@ -32,11 +33,12 @@ export class CryptoComponent implements OnInit, OnDestroy {
     accountBalanceOptions: ApexOptions;
     recentTransactionsDataSource: MatTableDataSource<any> = new MatTableDataSource();
     recentTransactionsTableColumns: string[] = ['name', 'commercialName', 'document', 'mobile', 'status', 'actions'];
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    _unsubscribeAll: Subject<any> = new Subject<any>();
     registerCompanyForm: UntypedFormGroup;
     updateCompanyBtn: boolean = false
     idCompany: number = 0
     configForm: UntypedFormGroup;
+    subjectKeyUp = new Subject<any>()
 
     constructor(
         private _cryptoService: CryptoService,
@@ -48,6 +50,9 @@ export class CryptoComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.subjectKeyUp.pipe(debounceTime(1000)).subscribe((value) => {
+            this.getCompaniesSearch(value)
+        })
         this.registerCompanyForm = this._formBuilder.group({
             name: ['', Validators.required],
             commercialName: ['', [Validators.required]],
@@ -160,20 +165,36 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
     searchCompany(event: any) {
         if (event.code == 'Enter') {
-            this.searchService.genericSearch(event.target.value, 'company').subscribe(data => {
-                this.data = data;
-                this.recentTransactionsDataSource.data = data.reverse();
-                this.alertService.hideAlertMessage()
-            }, (response: any) => {
-                this.alertService.showAlertMessage('warning', MessagesEnum.DEFAULT_MESSAGE_ERROR)
-            });
+            this.getCompaniesSearch(event.target.value)
+        } else {
+            this.subjectKeyUp.next(event.target.value)
         }
+    }
+
+    getCompaniesSearch(value: string) {
+        this.searchService.genericSearch(value, 'company').subscribe(data => {
+            this.data = data;
+            this.recentTransactionsDataSource.data = data.reverse();
+            this.alertService.hideAlertMessage()
+        }, (response: any) => {
+            this.alertService.showAlertMessage('warning', MessagesEnum.DEFAULT_MESSAGE_ERROR)
+        });
     }
 
     activateCompany(company: CompanyModel) {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             width: '500px',
-            data: { data: company },
+            data: { data: company, typeAlert: ALERT_REASONS.COMPANY_MANAGER },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
+    }
+
+    quote(company: CompanyModel) {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            width: '500px',
+            data: { data: company, typeAlert: ALERT_REASONS.COMPANY_QUOTE },
         });
         dialogRef.afterClosed().subscribe(result => {
 

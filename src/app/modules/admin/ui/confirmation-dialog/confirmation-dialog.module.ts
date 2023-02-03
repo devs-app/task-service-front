@@ -8,12 +8,20 @@ import { MatSelectModule } from '@angular/material/select';
 import { FuseHighlightModule } from '@fuse/components/highlight';
 import { SharedModule } from 'app/shared/shared.module';
 import { ConfirmationDialogComponent } from 'app/modules/admin/ui/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseAlertModule } from '@fuse/components/alert';
-;
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 
 export const routes: Route[] = [
     {
@@ -32,24 +40,24 @@ export const routes: Route[] = [
         MatCheckboxModule,
         MatFormFieldModule,
         MatInputModule,
-        MatSelectModule,
         FuseHighlightModule,
         SharedModule,
         MatDialogModule,
-        MatSelectModule,
-        FuseHighlightModule,
-        SharedModule,
-        MatSelectModule,
-        SharedModule,
-        MatCheckboxModule,
         MatIconModule,
         MatProgressSpinnerModule,
         FuseCardModule,
         FuseAlertModule,
-        SharedModule
-    ],
-    providers: [MatDialog,
-        MatDialogRef]
+        MatDividerModule,
+        MatMenuModule,
+        MatRadioModule,
+        MatAutocompleteModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ScrollingModule
+    ]
 })
 export class ConfirmationDialogModule {
 }

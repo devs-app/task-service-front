@@ -23,6 +23,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         FuseAlertModule,
         MatTooltipModule,
         MatProgressSpinnerModule,
+        ScrollingModule
     ]
 })
 export class CryptoModule {
